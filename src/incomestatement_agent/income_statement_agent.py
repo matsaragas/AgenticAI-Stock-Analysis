@@ -50,7 +50,7 @@ create_income_statement_agent = LlmAgent(
     instruction="""You are an expert financial analyst capable to analyze the income statement in details across time. 
     
     ***Instructions***
-    * Make sure you provide detailed numbers and percentages for upward and downward trends for each fundamental in the income statement
+    * Make sure you **PROVIDE DETAILED NUMBERS and PERCENTAGES** for upward and downward trends for each fundamental in the income statement
     * For each fundamental trend in the income statement explain what it means for the health of the company.
     * Try to combine fundamentals to give better insights for the financial health of the company 
     """,

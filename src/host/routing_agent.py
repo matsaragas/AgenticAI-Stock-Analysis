@@ -40,24 +40,6 @@ from google.adk.agents import LlmAgent
 from google.adk.models.google_llm import Gemini
 from google.adk.tools import AgentTool
 
-retry_config = types.HttpRetryOptions(
-    attempts=5,  # Maximum retry attempts
-    exp_base=7,  # Delay multiplier
-    initial_delay=1,
-    http_status_codes=[429, 500, 503, 504],  # Retry on these HTTP errors
-)
-
-planning_agent = LlmAgent(
-    name="PlanningAgent",
-    model=Gemini(model="gemini-2.5-flash-lite", retry_options=retry_config),
-    instruction=f"""You are a planning that that creates a plan to perform financial analysis for a company. 
-            
-            **INSTRUCTION:**
-            Your output MUST be a list of actionable items.
-            You should include an instruction to analyze the Balance sheet.
-            You should include an instruction to analyze the cash flows sheet.
-            """
-)
 
 
 class RoutingAgent:
@@ -118,6 +100,7 @@ class RoutingAgent:
 
     def create_agent(self) -> Agent:
         """Create an instance of teh RoutingAgent"""
+        plan_agent = self.planning_agent()
         return Agent(
             model='gemini-2.5-flash',
             name='Routing_agent',
@@ -128,7 +111,7 @@ class RoutingAgent:
                 of the financials of a company"""
             ),
             tools=[
-                self.send_message, AgentTool(agent=planning_agent)
+                self.send_message, AgentTool(agent=plan_agent)
             ],
         )
 
@@ -150,7 +133,7 @@ class RoutingAgent:
         * **Task Delegation:** Utilize the `send_message` function to assign actionable tasks to remote agents.
         * **Contextual Awareness for Remote Agents:** If a remote agent repeatedly requests user confirmation, assume it lacks access to the         full conversation history. In such cases, enrich the task description with all necessary contextual information relevant to that         specific agent.
         * **Autonomous Agent Engagement:** Never seek user permission before engaging with remote agents. If multiple agents are required to         fulfill a request, connect with them directly without requesting user preference or confirmation.
-        * **Transparent Communication:** Always present the complete and detailed response from the remote agent to the user.
+        * **Transparent Communication:** Always present the COMPLETE AND DETAILED response from the remote agent to the user.
         * **User Confirmation Relay:** If a remote agent asks for confirmation, and the user has not already provided it, relay this         confirmation request to the user.
         * **Focused Information Sharing:** Provide remote agents with only relevant contextual information. Avoid extraneous details.
         * **No Redundant Confirmations:** Do not ask remote agents for confirmation of information or actions.
@@ -194,6 +177,32 @@ class RoutingAgent:
             )
 
         return remote_agent_info
+
+
+    def planning_agent(self):
+
+        plan_agent = LlmAgent(
+            name="PlanningAgent",
+            model=Gemini(model="gemini-2.5-flash-lite"),
+            instruction=f"""You are a planning that that creates a plan to perform financial analysis for a company. 
+            
+            **INSTRUCTION:**
+            Your output MUST be a list of actionable items.
+            You should include an instruction to analyze the Balance sheet during the period requested by user.
+            You should include an instruction to analyze the cash flows statement during the period requested by user.
+            You should include instruction to analyze the income statement during the period requested by user.
+            
+            Simply output the above instructions without further recommendations planning. Also, 
+            make sure whatever plan is proposed can be executed by the available agents:
+            
+            **Agent Roster:**
+            * Available Agents: `{self.agents}`
+            """
+        )
+        return plan_agent
+
+
+
 
 
 

@@ -50,7 +50,7 @@ create_balance_sheet_agent = LlmAgent(
     instruction="""You are an expert financial analyst capable to analyze the balance sheet in details. 
     
     ***Instructions***
-    * Make sure you provide detailed numbers and percentages for upward and downward trends for each fundamental in the balance sheet
+    * Make sure you PROVIDE DETAILED NUMBERS and PERCENTAGES for upward and downward trends for each fundamental in the balance sheet
     * For each fundamental trend in the balance sheet explain what it means for the health of the company.
     * Try to combine fundamentals to give better insights for the financial health of the company 
     """,

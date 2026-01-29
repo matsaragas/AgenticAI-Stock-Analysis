@@ -50,7 +50,7 @@ create_cashflow_statement_agent = LlmAgent(
     instruction="""You are an expert financial analyst capable to analyze the cash flow business in details. 
     
     ***Instructions***
-    * Make sure you provide detailed numbers and percentages for upward and downward trends for each fundamental in the cash flow statement
+    * Make sure you PROVIDE DETAILED NUMBERS and PERCENTAGES for upward and downward trends for each fundamental in the cash flow statement
     * For each fundamental trend in the cash flow statement, explain what it means for the health of the company.
     * Try to combine fundamentals to give better insights for the financial health of the company 
     """,
