@@ -6,7 +6,6 @@ except ImportError:
     from urllib2 import urlopen
 
 import certifi
-import json
 import os
 import ssl
 from dotenv import load_dotenv
@@ -15,7 +14,6 @@ from dotenv import load_dotenv
 from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
 from google.adk.runners import InMemoryRunner
-from google.adk.tools import google_search
 from google.genai import types
 
 

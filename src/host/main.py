@@ -115,7 +115,7 @@ async def main():
         gr.ChatInterface(
             get_response_from_agent,
             title='A2A Host Agent',
-            description='This assistant can help you to check weather and find airbnb accommodation',
+            description='This assistant can help you to analyse financial data from companies',
         )
 
     print('Launching Gradio interface...')

@@ -24,8 +24,8 @@ retry_config = types.HttpRetryOptions(
 )
 
 
-def fmp_balance_sheet(ticker: str) -> Optional[str]:
-    """Hits the FMP API to retrieve the balance sheet information for the company with the given ticker.
+def fmp_cashflow_statement(ticker: str) -> Optional[str]:
+    """Hits the FMP API to retrieve the cash flow information for the company with the given ticker.
 
     Args:
         ticker: The ticker of the company we want to access the balance sheet
@@ -33,27 +33,27 @@ def fmp_balance_sheet(ticker: str) -> Optional[str]:
     Returns:
         A formatted string with search results, or None if no results.
     """
-    url = (f"https://financialmodelingprep.com/stable/balance-sheet-statement?symbol={ticker}&apikey={os.getenv('FMP_KEY')}")
+    url = (f"https://financialmodelingprep.com/stable/cash-flow-statement-as-reported?symbol={ticker}&apikey={os.getenv('FMP_KEY')}")
     try:
         context = ssl.create_default_context(cafile=certifi.where())
         response = urlopen(url, context=context)
         data = response.read().decode("utf-8")
         return data
     except Exception as e:
-        logger.error(f"fmp API request for balance sheet informaation failed for {ticker}")
+        logger.error(f"fmp API request for cash flow statement informaation failed for {ticker}")
 
 
-create_balance_sheet_agent = LlmAgent(
+create_cashflow_statement_agent = LlmAgent(
     model=Gemini(model="gemini-2.5-flash-lite", retry_options=retry_config),
-    name="Balance_Sheet_Agent",
-    description="A simple financial analysis agent that can perform analysis on balance sheet trends across time",
-    instruction="""You are an expert financial analyst capable to analyze the balance sheet in details. 
+    name="Cash_Flow_Agent",
+    description="A simple financial analysis agent that can perform analysis on cash flow statement trends across time",
+    instruction="""You are an expert financial analyst capable to analyze the cash flow business in details. 
     
     ***Instructions***
-    * Make sure you provide detailed numbers and percentages for upward and downward trends for each fundamental in the balance sheet
-    * For each fundamental trend in the balance sheet explain what it means for the health of the company.
+    * Make sure you provide detailed numbers and percentages for upward and downward trends for each fundamental in the cash flow statement
+    * For each fundamental trend in the cash flow statement, explain what it means for the health of the company.
     * Try to combine fundamentals to give better insights for the financial health of the company 
     """,
-    tools=[fmp_balance_sheet],
+    tools=[fmp_cashflow_statement],
 )
 

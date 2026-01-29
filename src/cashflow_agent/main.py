@@ -17,16 +17,17 @@ from google.adk.artifacts import InMemoryArtifactService
 from google.adk.memory.in_memory_memory_service import InMemoryMemoryService
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService
-from balance_sheet_executor import BalancesheetExecutor
+from cashflow_statement_executor import CashflowStatementExecutor
 
-from balance_sheet_agent import create_balance_sheet_agent
+from cash_flow_agent import create_cashflow_statement_agent
+
 
 load_dotenv()
 
 logging.basicConfig()
 
 DEFAULT_HOST = '0.0.0.0'
-DEFAULT_PORT = 10003
+DEFAULT_PORT = 10001
 
 
 def main(host: str = DEFAULT_HOST, port: int = DEFAULT_PORT):
@@ -41,16 +42,16 @@ def main(host: str = DEFAULT_HOST, port: int = DEFAULT_PORT):
         )
 
     skill = AgentSkill(
-        id='balancesheet_search',
-        name='Balance Sheet Analysis',
-        description='It analyses balance sheet of a company across time',
-        tags=['balance sheet', 'financial analysis'],
-        examples=['Analyse the balance sheet data for NVIDIA'],
+        id='cashflowstatement_search',
+        name='Cash Flow Statement Analysis',
+        description='It analyses the cash flow statement of a company across time',
+        tags=['cash flow statement', 'financial analysis'],
+        examples=['Analyse the cash flow statement data for NVIDIA'],
     )
     app_url = os.environ.get('APP_URL', f'http://{host}:{port}')
     agent_card = AgentCard(
-        name='Balance Sheet Agent',
-        description='Helps with Performing a Detailed analyses of balance sheet data across time for companies',
+        name='Cash Flow Statement Agent',
+        description='Helps with Performing a Detailed analyses of Cash Flow statement data across time for companies',
         url=app_url,
         version='1.0.0',
         default_input_modes=['text'],
@@ -58,7 +59,7 @@ def main(host: str = DEFAULT_HOST, port: int = DEFAULT_PORT):
         capabilities=AgentCapabilities(streaming=True),
         skills=[skill],
     )
-    adk_agent = create_balance_sheet_agent
+    adk_agent = create_cashflow_statement_agent
     runner = Runner(
         app_name=agent_card.name,
         agent=adk_agent,
@@ -66,7 +67,7 @@ def main(host: str = DEFAULT_HOST, port: int = DEFAULT_PORT):
         session_service=InMemorySessionService(),
         memory_service=InMemoryMemoryService(),
     )
-    agent_executor = BalancesheetExecutor(runner, agent_card)
+    agent_executor = CashflowStatementExecutor(runner, agent_card)
     request_handler = DefaultRequestHandler(
         agent_executor=agent_executor,
         task_store=InMemoryTaskStore()
