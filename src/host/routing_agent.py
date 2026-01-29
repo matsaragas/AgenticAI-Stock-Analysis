@@ -41,7 +41,6 @@ from google.adk.models.google_llm import Gemini
 from google.adk.tools import AgentTool
 
 
-
 class RoutingAgent:
     """The Routing agent.
 
@@ -86,7 +85,6 @@ class RoutingAgent:
             agent_info.append(json.dumps(agent_detail_dict))
         self.agents = '\n'.join(agent_info)
 
-
     @classmethod
     async def create(
             cls,
@@ -125,21 +123,31 @@ class RoutingAgent:
 
         **Core Directives:**
         
-        * **Planning:** Use the planning_agent to create a plan on how to execute a detailed financial analysis of a Company. 
+        * **Planning:** Use the planning_agent to create a plan on how to execute a detailed financial analysis of a 
+        Company. 
         Ask user to either Accept the proposed plan or revise before you continue.
         
-        If user Accepts the plan continue with the Task Delegation. If user disagrees with the proposed plan, ask user to refine the plan. 
+        If user Accepts the plan continue with the Task Delegation. If user disagrees with the proposed plan, ask user 
+        to refine the plan. 
 
         * **Task Delegation:** Utilize the `send_message` function to assign actionable tasks to remote agents.
-        * **Contextual Awareness for Remote Agents:** If a remote agent repeatedly requests user confirmation, assume it lacks access to the         full conversation history. In such cases, enrich the task description with all necessary contextual information relevant to that         specific agent.
-        * **Autonomous Agent Engagement:** Never seek user permission before engaging with remote agents. If multiple agents are required to         fulfill a request, connect with them directly without requesting user preference or confirmation.
+        * **Contextual Awareness for Remote Agents:** If a remote agent repeatedly requests user confirmation, assume 
+        it lacks access to the full conversation history. In such cases, enrich the task description with all necessary 
+        contextual information relevant to that specific agent.
+        
+        * **Autonomous Agent Engagement:** Never seek user permission before engaging with remote agents. 
+        If multiple agents are required to fulfill a request, connect with them directly without requesting user 
+        preference or confirmation.
         * **Transparent Communication:** Always present the COMPLETE AND DETAILED response from the remote agent to the user.
-        * **User Confirmation Relay:** If a remote agent asks for confirmation, and the user has not already provided it, relay this         confirmation request to the user.
+        * **User Confirmation Relay:** If a remote agent asks for confirmation, and the user has not already provided it, 
+        relay this confirmation request to the user.
         * **Focused Information Sharing:** Provide remote agents with only relevant contextual information. Avoid extraneous details.
         * **No Redundant Confirmations:** Do not ask remote agents for confirmation of information or actions.
-        * **Tool Reliance:** Strictly rely on available tools to address user requests. Do not generate responses based on assumptions. If         information is insufficient, request clarification from the user.
+        * **Tool Reliance:** Strictly rely on available tools to address user requests. Do not generate responses based on assumptions. 
+        If information is insufficient, request clarification from the user.
         * **Prioritize Recent Interaction:** Focus primarily on the most recent parts of the conversation when processing requests.
-        * **Active Agent Prioritization:** If an active agent is already engaged, route subsequent related requests to that agent using the         appropriate task update tool.
+        * **Active Agent Prioritization:** If an active agent is already engaged, route subsequent related requests to 
+        that agent using the appropriate task update tool.
 
         **Agent Roster:**
 
@@ -164,7 +172,6 @@ class RoutingAgent:
                 state['session_id'] = str(uuid.uuid4())
             state['session_active'] = True
 
-
     def list_remote_agents(self):
         """List the available remote agents you can use to delegate"""
         if not self.cards:
@@ -177,7 +184,6 @@ class RoutingAgent:
             )
 
         return remote_agent_info
-
 
     def planning_agent(self):
 
@@ -200,11 +206,6 @@ class RoutingAgent:
             """
         )
         return plan_agent
-
-
-
-
-
 
     async def send_message(
             self, agent_name: str, task: str, tool_context: ToolContext):
