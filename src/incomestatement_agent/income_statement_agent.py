@@ -33,7 +33,7 @@ def fmp_income_statement(ticker: str) -> Optional[str]:
     Returns:
         A formatted string with search results, or None if no results.
     """
-    url = f"https://financialmodelingprep.com/stable/income-statement?symbol=AAPL&apikey={os.getenv('FMP_KEY')}"
+    url = f"https://financialmodelingprep.com/stable/income-statement?symbol={ticker}&apikey={os.getenv('FMP_KEY')}"
     try:
         context = ssl.create_default_context(cafile=certifi.where())
         response = urlopen(url, context=context)
