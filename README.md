@@ -61,7 +61,7 @@ cd src/balancesheet_agent
 uv run main.py
 ```
 
-### 4. Run the Search Agent 
+## 4. Run the Search Agent 
 
 ```shell
 cd src/search_agents
@@ -69,14 +69,14 @@ uv run main.py
 ```
 
 ## 4. Run Host Agent
-___
+___                                                                                                                                                                                  
 
 ```shell
 cd src/host
 uv run main.py
 ```
 
-### 5. Access and Test the agentic solution on the UI
+## 5. Access and Test the agentic solution on the UI
 ___
 
 ```shell
