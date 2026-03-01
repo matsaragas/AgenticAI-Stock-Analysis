@@ -1,7 +1,77 @@
 # AgenticAI-A2A  for Stock-Analysis
 
-An agentic AI system that uses ADK-A2A to plan and execute comprehensive stock financial analysis, 
-with user authorization.
+
+
+
+<img src="https://github.githubassets.com/images/icons/emoji/unicode/1f680.png?v8" alt="Icon" width="22" height="22"> 
+This agentic AI DK-2A system is designed to perform comprehensive financial analysis by coordinating multiple specialized agents. 
+
+
+Each agent focuses on a critical component of company evaluation, enabling structured, multi-dimensional insights.
+
+
+<img src="https://github.githubassets.com/images/icons/emoji/unicode/1f50e.png?v8" alt="Icon" width="22" height="22"> What the System Can Do:
+
+
+### 1. Balance Sheet Trend Analysis Agent
+
+   * Analyzes balance sheet data across multiple time periods
+
+   * Evaluates changes in assets, liabilities, and equity
+
+   * Identifies trends in liquidity, leverage, and capital structure
+
+   * Highlights financial stability and long-term solvency patterns
+
+
+### 2. Cash Flow Statement Trend Analysis Agent
+
+   * Examines operating, investing, and financing cash flows over time
+
+   * Assesses cash generation quality and sustainability
+
+   * Detects capital allocation patterns
+
+   * Identifies potential liquidity risks or strengths
+
+
+### 3. Income Statement Trend Analysis Agent
+
+   * Tracks revenue growth, profitability, and expense trends
+
+   *  Analyzes margins (gross, operating, net) across periods
+
+   *  Evaluates earnings consistency and operational performance
+
+   *  Identifies improving or deteriorating financial performance
+
+
+### 4. Industry Comparative Analysis (Search Agent)
+
+   *  Conducts structured competitive analysis against leading industry peers
+
+   * Evaluates:
+
+     * Market position
+
+     * Financial performance
+
+     * Operational efficiency
+
+     * Innovation capacity
+
+     *  Brand strength
+
+     *  Strategic direction
+
+     * Identifies key competitive advantages and disadvantages
+
+
+
+
+
+## Agentic AI Architecture
+
 
 ![alt text](assets/financial_agent.png)
 
@@ -68,7 +138,7 @@ cd src/search_agents
 uv run main.py
 ```
 
-## 4. Run Host Agent
+## 5. Run Host Agent
 ___                                                                                                                                                                                  
 
 ```shell
@@ -76,7 +146,7 @@ cd src/host
 uv run main.py
 ```
 
-## 5. Access and Test the agentic solution on the UI
+## 6. Access and Test the agentic solution on the UI
 ___
 
 ```shell
