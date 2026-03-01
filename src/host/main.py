@@ -21,6 +21,11 @@ APP_NAME = 'routing_app'
 USER_ID = 'default_user'
 SESSION_ID = 'default_session'
 
+# Define the container for the conversations. It encapsulates the conversation history in a chronological manner
+# and also records all tool interactions and responses for a single, continuous conversation.
+# In ADK, a Session is comprised of two key components `Events` and `State`.
+
+
 SESSION_SERVICE = InMemorySessionService()
 ROUTING_AGENT_RUNNER = Runner(
     agent=routing_agent,
@@ -28,6 +33,17 @@ ROUTING_AGENT_RUNNER = Runner(
     session_service=SESSION_SERVICE,
 )
 
+
+async def print_session_summary(session_id: str):
+    session = await SESSION_SERVICE.get_session(session_id=session_id, app_name=APP_NAME, user_id=USER_ID)
+
+    for event in session.events:
+        # Check if the event has content (messages)
+        if hasattr(event, 'content') and event.content:
+            role = event.content.role
+            # Extract text from parts
+            text = "".join([p.text for p in event.content.parts if p.text])
+            print(f"[{role.upper()}]: {text}")
 
 async def get_response_from_agent(
         message: str,
@@ -81,6 +97,8 @@ async def get_response_from_agent(
                     yield gr.ChatMessage(
                         role='assistant', content=final_response_text
                     )
+
+                logger.info(f"Print the entire Session: {await print_session_summary(SESSION_ID)}")
                 break
     except Exception as e:
         print(f'Error in get_response_from_agent (Type: {type(e)}): {e}')

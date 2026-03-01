@@ -190,16 +190,21 @@ class RoutingAgent:
         plan_agent = LlmAgent(
             name="PlanningAgent",
             model=Gemini(model="gemini-2.5-flash-lite"),
-            instruction=f"""You are a planning that that creates a plan to perform financial analysis for a company. 
+            instruction=f"""You are a planning that creates a plan to perform financial analysis for a company. 
             
             **INSTRUCTION:**
             Your output MUST be a list of actionable items.
             You should include an instruction to analyze the Balance sheet during the period requested by user.
             You should include an instruction to analyze the cash flows statement during the period requested by user.
             You should include instruction to analyze the income statement during the period requested by user.
+            Finally, you should include clear instructions to conduct a comparative analysis of the company of interest 
+            against other prominent firms within the same industry. The analysis should identify and evaluate the 
+            company’s key competitive advantages and disadvantages relative to its peers, 
+            considering factors such as market position, financial performance, operational efficiency, innovation, 
+            brand strength, and strategic direction.
             
             Simply output the above instructions without further recommendations planning. Also, 
-            make sure whatever plan is proposed can be executed by the available agents:
+            make sure whatever plan is proposed can be executed by the Available Agents:
             
             **Agent Roster:**
             * Available Agents: `{self.agents}`
@@ -356,6 +361,7 @@ def _get_initialized_routing_agent_sync() -> Agent:
                 'Consider initializing RoutingAgent within an async function in your application.'
             )
         raise
+
 
 root_agent = _get_initialized_routing_agent_sync()
 
