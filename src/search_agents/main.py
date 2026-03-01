@@ -26,7 +26,7 @@ load_dotenv()
 logging.basicConfig()
 
 DEFAULT_HOST = '0.0.0.0'
-DEFAULT_PORT = 10003
+DEFAULT_PORT = 10004
 
 
 def main(host: str = DEFAULT_HOST, port: int = DEFAULT_PORT):
