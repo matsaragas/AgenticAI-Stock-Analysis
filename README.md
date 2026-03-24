@@ -6,6 +6,11 @@
 <img src="https://github.githubassets.com/images/icons/emoji/unicode/1f680.png?v8" alt="Icon" width="22" height="22"> 
 This agentic AI DK-2A system is designed to perform comprehensive financial analysis by coordinating multiple specialized agents. 
 
+## Agentic AI Architecture
+
+
+![alt text](assets/financial_agent.png)
+
 
 Each agent focuses on a critical component of company evaluation, enabling structured, multi-dimensional insights.
 
@@ -70,10 +75,7 @@ Each agent focuses on a critical component of company evaluation, enabling struc
 
 
 
-## Agentic AI Architecture
 
-
-![alt text](assets/financial_agent.png)
 
 The UI that allows us to interact with the Agentic AI:
 
